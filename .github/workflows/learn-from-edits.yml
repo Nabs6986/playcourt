@@ -1,0 +1,76 @@
+name: Track Content Edits
+
+# Simpler version - just logs diffs, no API needed
+# I (Adam) review EDIT-LOG.md periodically and update VOICE-LEARNINGS.md
+
+on:
+  push:
+    paths:
+      - 'app/blog/**'
+      - 'app/reviews/**'
+      - 'app/comparisons/**'
+      - 'app/compare/**'
+      - 'app/vs/**'
+      - 'app/best/**'
+
+jobs:
+  log-edits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Get changed content files
+        id: changed
+        run: |
+          FILES=$(git diff --name-only HEAD~1 HEAD | grep -E '^app/(blog|reviews|comparisons|compare|vs|best)/' || true)
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          echo "$FILES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          if [ -n "$FILES" ]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Log content changes
+        if: steps.changed.outputs.has_changes == 'true'
+        run: |
+          echo "" >> EDIT-LOG.md
+          echo "---" >> EDIT-LOG.md
+          echo "## $(date +%Y-%m-%d' '%H:%M) — Content Edit" >> EDIT-LOG.md
+          echo "" >> EDIT-LOG.md
+          echo "**Commit:** ${{ github.sha }}" >> EDIT-LOG.md
+          echo "**Author:** ${{ github.actor }}" >> EDIT-LOG.md
+          echo "**Message:** ${{ github.event.head_commit.message }}" >> EDIT-LOG.md
+          echo "" >> EDIT-LOG.md
+          echo "**Files changed:**" >> EDIT-LOG.md
+          echo '${{ steps.changed.outputs.files }}' | while read file; do
+            if [ -n "$file" ]; then
+              echo "- \`$file\`" >> EDIT-LOG.md
+            fi
+          done
+          echo "" >> EDIT-LOG.md
+          echo "**Diff summary:**" >> EDIT-LOG.md
+          echo "\`\`\`diff" >> EDIT-LOG.md
+          git diff HEAD~1 HEAD --stat -- ${{ steps.changed.outputs.files }} >> EDIT-LOG.md
+          echo "\`\`\`" >> EDIT-LOG.md
+          echo "" >> EDIT-LOG.md
+          echo "**Key changes (first 50 lines):**" >> EDIT-LOG.md
+          echo "\`\`\`diff" >> EDIT-LOG.md
+          git diff HEAD~1 HEAD -- ${{ steps.changed.outputs.files }} | grep -E '^[+-]' | grep -v '^[+-]{3}' | head -50 >> EDIT-LOG.md
+          echo "\`\`\`" >> EDIT-LOG.md
+          echo "" >> EDIT-LOG.md
+          echo "**Lessons extracted:** *(pending review)*" >> EDIT-LOG.md
+          echo "" >> EDIT-LOG.md
+
+      - name: Commit edit log
+        if: steps.changed.outputs.has_changes == 'true'
+        run: |
+          git config user.name "Writer Agent"
+          git config user.email "writer@openclaw.local"
+          git add EDIT-LOG.md
+          git diff --staged --quiet || git commit -m "📝 Log content edit for voice learning"
+          git push
