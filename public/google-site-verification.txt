@@ -1,0 +1,14 @@
+# Google Search Console Verification
+# After deploying, go to: https://search.google.com/search-console
+# Add property > URL prefix > playcourt.io
+# Choose "HTML file" verification method
+# Download the google*.html file and replace this placeholder
+# Then re-deploy
+
+# For now, use the "HTML tag" method:
+# 1. Go to Search Console > Settings > Ownership verification
+# 2. Copy the meta tag
+# 3. Add to app/layout.tsx in the <head>
+
+# IndexNow key (for Bing/Yandex instant indexing):
+# Generate at: https://www.bing.com/indexnow

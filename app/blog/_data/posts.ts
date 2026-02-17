@@ -915,6 +915,60 @@ The smartest approach: start with PlayCourt's 14-day free trial. If you hit limi
       },
     ],
   },
+
+  "ditching-spreadsheets": {
+    slug: "ditching-spreadsheets",
+    title: "How Small Tennis Clubs Are Ditching Spreadsheets in 2026",
+    excerpt:
+      "Discover why hundreds of small tennis clubs are abandoning Excel and Google Sheets for dedicated booking software — and the exact ROI they're seeing in the first 90 days.",
+    content: `See the full article at /blog/ditching-spreadsheets`,
+    author: { name: "PlayCourt Team", role: "Editorial" },
+    publishedAt: "2026-02-17",
+    category: "guide",
+    tags: ["spreadsheets", "migration guide", "ROI", "club management", "2026"],
+    readingTime: 10,
+    metaDescription:
+      "Why small tennis clubs are ditching spreadsheets for booking software in 2026 — with real ROI numbers and a step-by-step migration guide.",
+    faqs: [
+      {
+        question: "Why should a small tennis club switch from spreadsheets to booking software?",
+        answer:
+          "Spreadsheets can't prevent double-bookings, send automatic reminders, or allow 24/7 member self-service. These limitations cost clubs real money — in staff time, no-shows, and member frustration. Most clubs switching to dedicated software like PlayCourt recover the subscription cost within 30 days from no-show reduction alone.",
+      },
+      {
+        question: "How long does it take to migrate from spreadsheets to PlayCourt?",
+        answer:
+          "Most clubs complete the full migration in under two hours. Export your member list as CSV, import into PlayCourt, add your courts and booking rules, and send member invitations. PlayCourt's setup is entirely self-service — no implementation team or technical knowledge required.",
+      },
+    ],
+  },
+
+  "true-cost-phone-bookings": {
+    slug: "true-cost-phone-bookings",
+    title: "The True Cost of Phone Bookings for Tennis Clubs",
+    excerpt:
+      "Calculate what phone reservations actually cost your tennis club — in staff hours, no-shows, and member experience. The numbers will surprise you.",
+    content: `See the full article at /blog/true-cost-phone-bookings`,
+    author: { name: "PlayCourt Team", role: "Editorial" },
+    publishedAt: "2026-02-17",
+    category: "guide",
+    tags: ["phone booking", "staff time", "no-shows", "club management", "ROI"],
+    readingTime: 9,
+    metaDescription:
+      "Calculate what phone reservations actually cost your tennis club in staff hours, no-shows, and member experience. Most clubs lose $10,000–$18,000 annually.",
+    faqs: [
+      {
+        question: "How much time do tennis clubs spend on phone bookings?",
+        answer:
+          "The average tennis club spends 5–10 hours per week managing phone bookings. At a $22/hour staff rate, that's $5,720–$11,440 annually in direct labor cost.",
+      },
+      {
+        question: "Do phone bookings cause more no-shows than online bookings?",
+        answer:
+          "Yes. Phone bookings typically have a 15–25% no-show rate compared to 5–10% for online bookings with automated reminders. The primary reason is that online booking systems send automated SMS and email reminders that phone booking systems can't replicate without significant manual effort.",
+      },
+    ],
+  },
 };
 
 export function getPost(slug: string): BlogPost | undefined {
