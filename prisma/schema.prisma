@@ -1,0 +1,368 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum MemberRole {
+  admin
+  member
+}
+
+enum MemberStatus {
+  active
+  inactive
+}
+
+enum BookingStatus {
+  confirmed
+  cancelled
+  blocked
+}
+
+enum NotificationType {
+  confirmation
+  reminder_24h
+  cancellation
+  admin_daily_digest
+}
+
+enum MediaType {
+  logo
+  court_photo
+}
+
+enum SubscriptionStatus {
+  trialing
+  active
+  past_due
+  cancelled
+}
+
+enum InvoiceStatus {
+  draft
+  open
+  paid
+  void
+}
+
+enum LessonBookingStatus {
+  confirmed
+  cancelled
+}
+
+model Club {
+  id            String   @id @default(cuid())
+  name          String
+  slug          String   @unique
+  address       String?
+  phone         String?
+  timezone      String   @default("America/New_York")
+  emailFromName String?
+  logoUrl       String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  settings       ClubSettings?
+  hours          OperatingHour[]
+  courts         Court[]
+  members        Member[]
+  bookings       Booking[]
+  media          ClubMedia[]
+  auditEvents    AuditEvent[]
+  proProfiles    ProProfile[]
+  subscriptions  Subscription[]
+  lessonTypes    LessonType[]
+  lessonSlots    LessonSlot[]
+  lessonBookings LessonBooking[]
+}
+
+model ClubSettings {
+  clubId                  String   @id
+  maxAdvanceDays          Int      @default(7)
+  maxHoursPerMemberPerDay Int      @default(2)
+  cancellationWindowHours Int      @default(12)
+  allowGuestBooking       Boolean  @default(false)
+  bookingDurations        Json     @default("[60,90]")
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  club Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+}
+
+model OperatingHour {
+  id        String  @id @default(cuid())
+  clubId    String
+  dayOfWeek Int
+  openTime  String
+  closeTime String
+  isClosed  Boolean @default(false)
+
+  club Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+
+  @@index([clubId, dayOfWeek])
+}
+
+model Court {
+  id          String   @id @default(cuid())
+  clubId      String
+  name        String
+  surfaceType String?
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  club     Club      @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  bookings Booking[]
+
+  @@index([clubId, sortOrder])
+}
+
+model Member {
+  id             String       @id @default(cuid())
+  clubId         String
+  supabaseUserId String?
+  email          String
+  name           String
+  phone          String?
+  role           MemberRole   @default(member)
+  status         MemberStatus @default(active)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  club              Club            @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  bookings          Booking[]       @relation("bookingMember")
+  sponsoredBookings Booking[]       @relation("sponsoringMember")
+  auditEvents       AuditEvent[]
+  paymentMethods    PaymentMethod[]
+  subscriptions     Subscription[]
+  lessonBookings    LessonBooking[]
+  proProfile        ProProfile?
+
+  @@unique([clubId, email])
+  @@index([clubId, role])
+}
+
+model Booking {
+  id                 String        @id @default(cuid())
+  clubId             String
+  courtId            String
+  memberId           String
+  date               DateTime
+  startAt            DateTime
+  endAt              DateTime
+  durationMinutes    Int
+  status             BookingStatus @default(confirmed)
+  createdByRole      MemberRole
+  guestName          String?
+  sponsoringMemberId String?
+  cancelledAt        DateTime?
+  cancellationReason String?
+  reminder24hSentAt  DateTime?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  club             Club                  @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  court            Court                 @relation(fields: [courtId], references: [id], onDelete: Cascade)
+  member           Member                @relation("bookingMember", fields: [memberId], references: [id], onDelete: Cascade)
+  sponsoringMember Member?               @relation("sponsoringMember", fields: [sponsoringMemberId], references: [id])
+  notifications    BookingNotification[]
+
+  @@index([clubId, courtId, startAt])
+  @@index([clubId, memberId, startAt])
+}
+
+model BookingNotification {
+  id                String           @id @default(cuid())
+  bookingId         String
+  type              NotificationType
+  sentAt            DateTime         @default(now())
+  providerMessageId String?
+
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@index([bookingId, type])
+}
+
+model ClubMedia {
+  id        String    @id @default(cuid())
+  clubId    String
+  type      MediaType
+  url       String
+  altText   String?
+  sortOrder Int       @default(0)
+
+  club Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+
+  @@index([clubId, type, sortOrder])
+}
+
+model AuditEvent {
+  id            String   @id @default(cuid())
+  clubId        String
+  actorMemberId String?
+  action        String
+  entityType    String
+  entityId      String
+  payloadJson   Json?
+  createdAt     DateTime @default(now())
+
+  club        Club    @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  actorMember Member? @relation(fields: [actorMemberId], references: [id])
+
+  @@index([clubId, createdAt])
+}
+
+model BillingPlan {
+  id          String   @id @default(cuid())
+  name        String
+  amountCents Int
+  currency    String   @default("usd")
+  interval    String   @default("month")
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  subscriptions Subscription[]
+}
+
+model PaymentMethod {
+  id          String   @id @default(cuid())
+  memberId    String
+  provider    String
+  providerRef String
+  brand       String?
+  last4       String?
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  member        Member         @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  subscriptions Subscription[]
+
+  @@index([memberId, isDefault])
+}
+
+model Subscription {
+  id                 String             @id @default(cuid())
+  clubId             String
+  memberId           String
+  planId             String
+  paymentMethodId    String?
+  provider           String?
+  providerRef        String?
+  status             SubscriptionStatus @default(trialing)
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  club          Club           @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  member        Member         @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  plan          BillingPlan    @relation(fields: [planId], references: [id])
+  paymentMethod PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
+  invoices      Invoice[]
+
+  @@index([clubId, status])
+  @@index([memberId, status])
+}
+
+model Invoice {
+  id             String        @id @default(cuid())
+  subscriptionId String
+  providerRef    String?
+  amountCents    Int
+  currency       String        @default("usd")
+  status         InvoiceStatus @default(open)
+  dueAt          DateTime?
+  paidAt         DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([subscriptionId, status])
+}
+
+model ProProfile {
+  id        String   @id @default(cuid())
+  clubId    String
+  memberId  String   @unique
+  bio       String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  club           Club            @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  member         Member          @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  lessonSlots    LessonSlot[]
+  lessonBookings LessonBooking[]
+
+  @@index([clubId, isActive])
+}
+
+model LessonType {
+  id              String   @id @default(cuid())
+  clubId          String
+  name            String
+  durationMinutes Int
+  priceCents      Int?
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  club           Club            @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  lessonSlots    LessonSlot[]
+  lessonBookings LessonBooking[]
+
+  @@index([clubId, isActive])
+}
+
+model LessonSlot {
+  id           String   @id @default(cuid())
+  clubId       String
+  proProfileId String
+  lessonTypeId String
+  startAt      DateTime
+  endAt        DateTime
+  isBooked     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  club          Club           @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  proProfile    ProProfile     @relation(fields: [proProfileId], references: [id], onDelete: Cascade)
+  lessonType    LessonType     @relation(fields: [lessonTypeId], references: [id], onDelete: Cascade)
+  lessonBooking LessonBooking?
+
+  @@index([clubId, startAt])
+  @@index([proProfileId, startAt])
+}
+
+model LessonBooking {
+  id           String              @id @default(cuid())
+  clubId       String
+  memberId     String
+  proProfileId String
+  lessonTypeId String
+  lessonSlotId String?             @unique
+  startAt      DateTime
+  endAt        DateTime
+  status       LessonBookingStatus @default(confirmed)
+  notes        String?
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  club       Club        @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  member     Member      @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  proProfile ProProfile  @relation(fields: [proProfileId], references: [id], onDelete: Cascade)
+  lessonType LessonType  @relation(fields: [lessonTypeId], references: [id], onDelete: Cascade)
+  lessonSlot LessonSlot? @relation(fields: [lessonSlotId], references: [id])
+
+  @@index([clubId, startAt])
+  @@index([memberId, startAt])
+}

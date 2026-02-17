@@ -1,0 +1,38 @@
+# PlayCourt robots.txt
+# Optimized for AI search engines (GEO)
+
+# Traditional crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# AI Search Engines - ALLOW ALL
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# Default
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://playcourt.io/sitemap.xml
