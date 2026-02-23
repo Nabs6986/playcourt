@@ -11,6 +11,10 @@ const footerLinks = {
     { label: "Blog", href: "#" },
     { label: "Contact", href: "#" }
   ],
+  Resources: [
+    { label: "FAQ", href: "/faq" },
+    { label: "How We Review", href: "/how-we-review" }
+  ],
   Legal: [
     { label: "Privacy", href: "#" },
     { label: "Terms", href: "#" }
