@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Check, ArrowRight, TrendingUp, Target, Zap, BarChart } from "lucide-react";
 import { getUseCase, getAllUseCaseSlugs } from "../_data/useCases";
+import { ArticleSchema } from "@/components/schema/ArticleSchema";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 interface Props {
   params: Promise<{ useCase: string }>;
@@ -68,6 +70,20 @@ export default async function UseCasePage({ params }: Props) {
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Use Cases", url: "https://playcourt.io/use-case/" + slug },
+          { name: useCase.headline, url: `https://playcourt.io/use-case/${slug}` },
+        ]}
+      />
+      <ArticleSchema
+        title={useCase.headline}
+        description={useCase.metaDescription}
+        author="PlayCourt"
+        datePublished="2026-02-01"
+        url={`https://playcourt.io/use-case/${slug}`}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

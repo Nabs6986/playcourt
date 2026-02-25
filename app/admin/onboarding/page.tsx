@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 const steps = [
   { label: "Club name, address, phone", done: true },
@@ -15,6 +16,13 @@ const steps = [
 export default function AdminOnboardingPage() {
   return (
     <div className="max-w-3xl">
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Admin", url: "https://playcourt.io/admin" },
+          { name: "Onboarding", url: "https://playcourt.io/admin/onboarding" },
+        ]}
+      />
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-slate-900">Onboarding Wizard</h1>
         <p className="mt-1 text-sm text-slate-500">Step-by-step club setup for new pilots.</p>

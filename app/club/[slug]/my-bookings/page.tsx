@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { StatusBadge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export default function MyBookingsPage({ params }: { params: { slug: string } }) {
   const [memberId, setMemberId] = useState("");
@@ -27,6 +28,13 @@ export default function MyBookingsPage({ params }: { params: { slug: string } })
 
   return (
     <div className="min-h-screen bg-slate-50">
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Club", url: `https://playcourt.io/club/${params.slug}` },
+          { name: "My Bookings", url: `https://playcourt.io/club/${params.slug}/my-bookings` },
+        ]}
+      />
       <header className="sticky top-0 z-30 border-b border-slate-200/50 bg-white/80 backdrop-blur-lg">
         <div className="mx-auto flex h-14 max-w-3xl items-center px-6">
           <h1 className="text-lg font-semibold text-slate-900">My Bookings</h1>

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Check, ArrowRight, HelpCircle } from "lucide-react";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export const metadata: Metadata = {
   title: "Pricing | PlayCourt - Tennis Court Booking Software",
@@ -127,6 +128,12 @@ export default function PricingPage() {
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Pricing", url: "https://playcourt.io/pricing" },
+        ]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingSchema) }}

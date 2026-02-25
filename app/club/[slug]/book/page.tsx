@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 type Slot = { startAt: string; endAt: string };
 type SlotByCourt = { courtId: string; courtName: string; slots: Slot[] };
@@ -80,6 +81,13 @@ export default function BookCourtPage({ params }: { params: { slug: string } }) 
 
   return (
     <div className="min-h-screen bg-slate-50">
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Club", url: `https://playcourt.io/club/${params.slug}` },
+          { name: "Book a Court", url: `https://playcourt.io/club/${params.slug}/book` },
+        ]}
+      />
       {/* Header */}
       <header className="sticky top-0 z-30 border-b border-slate-200/50 bg-white/80 backdrop-blur-lg">
         <div className="mx-auto flex h-14 max-w-3xl items-center px-6">

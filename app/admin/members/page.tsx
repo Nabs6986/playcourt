@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/Label";
 import { StatusBadge } from "@/components/ui/Badge";
 import { Avatar } from "@/components/ui/Avatar";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 type Member = {
   id: string;
@@ -65,6 +66,13 @@ export default function AdminMembersPage() {
 
   return (
     <div className="max-w-5xl">
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Admin", url: "https://playcourt.io/admin" },
+          { name: "Members", url: "https://playcourt.io/admin/members" },
+        ]}
+      />
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-slate-900">Members</h1>
         <p className="mt-1 text-sm text-slate-500">Manage your club members and roles.</p>

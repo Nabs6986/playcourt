@@ -12,6 +12,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { Card } from "@/components/ui/Card";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 const links: Array<{ href: Route; label: string; description: string; icon: typeof CalendarDays }> = [
   { href: "/admin/bookings", label: "Bookings", description: "View and manage court reservations", icon: CalendarDays },
@@ -30,6 +31,12 @@ export default function AdminPage() {
 
   return (
     <div className="max-w-5xl">
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Admin", url: "https://playcourt.io/admin" },
+        ]}
+      />
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-slate-900">{greeting}</h1>
         <p className="mt-1 text-sm text-slate-500">{dateStr}</p>

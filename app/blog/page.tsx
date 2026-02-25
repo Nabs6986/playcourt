@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Calendar, Clock, Tag } from "lucide-react";
 import { getAllPosts } from "./_data/posts";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export const metadata: Metadata = {
   title: "Blog | PlayCourt - Tennis Court Booking Insights",
@@ -56,6 +57,12 @@ export default function BlogPage() {
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Blog", url: "https://playcourt.io/blog" },
+        ]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}

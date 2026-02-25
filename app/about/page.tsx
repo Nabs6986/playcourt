@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Target, Heart, Zap } from "lucide-react";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export const metadata: Metadata = {
   title: "About PlayCourt | Tennis Court Booking Software",
@@ -58,6 +59,12 @@ export default function AboutPage() {
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "About", url: "https://playcourt.io/about" },
+        ]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}

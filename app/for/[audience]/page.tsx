@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Check, ArrowRight, Users, Clock, TrendingUp, Star } from "lucide-react";
 import { getAudience, getAllAudienceSlugs } from "../_data/audiences";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
+import { ItemListSchema } from "@/components/schema/ItemListSchema";
 
 interface Props {
   params: Promise<{ audience: string }>;
@@ -74,6 +76,22 @@ export default async function AudiencePage({ params }: Props) {
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Solutions", url: "https://playcourt.io/for/" + slug },
+          { name: audience.name, url: `https://playcourt.io/for/${slug}` },
+        ]}
+      />
+      <ItemListSchema
+        name={`PlayCourt Solutions for ${audience.name}`}
+        url={`https://playcourt.io/for/${slug}`}
+        items={audience.solutions.map((solution, i) => ({
+          name: solution.title,
+          url: `https://playcourt.io/for/${slug}#solution-${i}`,
+          description: solution.description,
+        }))}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

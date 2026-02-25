@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export default function AdminLessonsPage() {
   const [clubId, setClubId] = useState("");
@@ -21,6 +22,13 @@ export default function AdminLessonsPage() {
 
   return (
     <div className="max-w-3xl">
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Admin", url: "https://playcourt.io/admin" },
+          { name: "Lessons", url: "https://playcourt.io/admin/lessons" },
+        ]}
+      />
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-slate-900">Lessons</h1>
         <p className="mt-1 text-sm text-slate-500">V2 scaffold for lesson scheduling and availability.</p>

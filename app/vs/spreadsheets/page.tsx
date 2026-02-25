@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Check, X, ArrowRight, Clock, DollarSign, TrendingDown, Users } from "lucide-react";
+import { ComparisonSchema } from "@/components/schema/ComparisonSchema";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export const metadata: Metadata = {
   title: "PlayCourt vs Spreadsheets: Tennis Club Booking Software Comparison",
@@ -87,6 +89,20 @@ function FeatureIcon({ value }: { value: boolean | string }) {
 export default function VsSpreadsheets() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Comparisons", url: "https://playcourt.io/vs/spreadsheets" },
+          { name: "PlayCourt vs Spreadsheets", url: "https://playcourt.io/vs/spreadsheets" },
+        ]}
+      />
+      <ComparisonSchema
+        products={[
+          { name: "PlayCourt", description: "Tennis court booking and club management software with online booking, automatic reminders, and member management." },
+          { name: "Spreadsheets", description: "Manual court booking management using Excel or Google Sheets." },
+        ]}
+        url="https://playcourt.io/vs/spreadsheets"
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

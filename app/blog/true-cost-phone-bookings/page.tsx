@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Calendar, Clock, User } from "lucide-react";
+import { ArticleSchema } from "@/components/schema/ArticleSchema";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export const metadata: Metadata = {
   title: "The True Cost of Phone Bookings for Tennis Clubs | PlayCourt Blog",
@@ -12,29 +14,6 @@ export const metadata: Metadata = {
       "Staff time, no-show rates, and member frustration: the hidden costs of running a tennis club on phone calls.",
     type: "article",
     publishedTime: "2026-02-17",
-  },
-};
-
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  headline: "The True Cost of Phone Bookings for Tennis Clubs",
-  description:
-    "Calculate what phone reservations actually cost your tennis club in staff hours, no-shows, and member experience.",
-  datePublished: "2026-02-17",
-  dateModified: "2026-02-17",
-  author: {
-    "@type": "Organization",
-    name: "PlayCourt Team",
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "PlayCourt",
-    url: "https://playcourt.io",
-  },
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": "https://playcourt.io/blog/true-cost-phone-bookings",
   },
 };
 
@@ -88,9 +67,20 @@ const faqSchema = {
 export default function TrueCostPhoneBookingsBlogPost() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Blog", url: "https://playcourt.io/blog" },
+          { name: "True Cost of Phone Bookings", url: "https://playcourt.io/blog/true-cost-phone-bookings" },
+        ]}
+      />
+      <ArticleSchema
+        title="The True Cost of Phone Bookings for Tennis Clubs"
+        description="Calculate what phone reservations actually cost your tennis club in staff hours, no-shows, and member experience."
+        author="PlayCourt Team"
+        datePublished="2026-02-17"
+        dateModified="2026-02-17"
+        url="https://playcourt.io/blog/true-cost-phone-bookings"
       />
       <script
         type="application/ld+json"

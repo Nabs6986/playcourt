@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Check, X, ArrowRight } from "lucide-react";
 import { getCompetitor, getAllCompetitorSlugs, Competitor } from "../_data/competitors";
+import { ComparisonSchema } from "@/components/schema/ComparisonSchema";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 interface Props {
   params: Promise<{ competitor: string }>;
@@ -62,6 +64,20 @@ export default async function ComparisonPage({ params }: Props) {
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Comparisons", url: "https://playcourt.io/vs/spreadsheets" },
+          { name: `PlayCourt vs ${competitor.name}`, url: `https://playcourt.io/vs/${slug}` },
+        ]}
+      />
+      <ComparisonSchema
+        products={[
+          { name: "PlayCourt", description: "Tennis court booking and club management software with online booking, automatic reminders, and member management." },
+          { name: competitor.name, description: competitor.metaDescription },
+        ]}
+        url={`https://playcourt.io/vs/${slug}`}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

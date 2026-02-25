@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export default function AdminAnalyticsPage() {
   const [clubId, setClubId] = useState("");
@@ -27,6 +28,13 @@ export default function AdminAnalyticsPage() {
 
   return (
     <div className="max-w-4xl">
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Admin", url: "https://playcourt.io/admin" },
+          { name: "Analytics", url: "https://playcourt.io/admin/analytics" },
+        ]}
+      />
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-slate-900">Analytics</h1>
         <p className="mt-1 text-sm text-slate-500">Booking trends and popular hours.</p>

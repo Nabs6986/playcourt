@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { StatusBadge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 type BookingRow = {
   id: string;
@@ -36,6 +37,13 @@ export default function AdminBookingsPage() {
 
   return (
     <div className="max-w-6xl">
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Admin", url: "https://playcourt.io/admin" },
+          { name: "Bookings", url: "https://playcourt.io/admin/bookings" },
+        ]}
+      />
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-slate-900">Bookings</h1>
         <p className="mt-1 text-sm text-slate-500">View and manage court reservations.</p>

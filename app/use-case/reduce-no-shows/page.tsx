@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Check, ArrowRight, Bell, MousePointerClick, Users, TrendingUp, BarChart, Zap, Target } from "lucide-react";
+import { ArticleSchema } from "@/components/schema/ArticleSchema";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export const metadata: Metadata = {
   title: "Reduce Tennis Court No-Shows by 73% | PlayCourt",
@@ -104,6 +106,20 @@ const howToSchema = {
 export default function ReduceNoShowsPage() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Use Cases", url: "https://playcourt.io/use-case/reduce-no-shows" },
+          { name: "Reduce No-Shows", url: "https://playcourt.io/use-case/reduce-no-shows" },
+        ]}
+      />
+      <ArticleSchema
+        title="Reduce Tennis Court No-Shows by 73%"
+        description="No-shows cost tennis clubs $8,000-$15,000 annually. PlayCourt's automatic reminders and waitlist system cut no-show rates from 20%+ down to under 5%."
+        author="PlayCourt"
+        datePublished="2026-02-01"
+        url="https://playcourt.io/use-case/reduce-no-shows"
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

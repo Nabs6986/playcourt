@@ -4,10 +4,16 @@ import { Navbar } from "@/components/marketing/Navbar";
 import { Footer } from "@/components/marketing/Footer";
 import { PricingCard } from "@/components/marketing/PricingCard";
 import { FAQ } from "@/components/marketing/FAQ";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export default function HomePage() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+        ]}
+      />
       <Navbar />
 
       {/* Hero */}

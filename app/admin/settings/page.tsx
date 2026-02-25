@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -65,6 +66,13 @@ export default function AdminSettingsPage() {
 
   return (
     <div className="max-w-5xl">
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Admin", url: "https://playcourt.io/admin" },
+          { name: "Settings", url: "https://playcourt.io/admin/settings" },
+        ]}
+      />
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-slate-900">Settings</h1>
         <p className="mt-1 text-sm text-slate-500">Configure booking rules and operating hours.</p>

@@ -5,6 +5,7 @@ import { MapPin, Phone, Clock, ChevronRight, Wifi, Car, ShowerHead, Users, Coffe
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 // Mock amenities data - would come from DB in production
 const amenityIcons: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -65,6 +66,13 @@ export default async function ClubProfilePage({
 
   return (
     <div className="min-h-screen bg-slate-50">
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Clubs", url: `https://playcourt.io/club/${club.slug}` },
+          { name: club.name, url: `https://playcourt.io/club/${club.slug}` },
+        ]}
+      />
       {/* Navigation Header */}
       <header className="sticky top-0 z-30 border-b border-slate-200/50 bg-white/80 backdrop-blur-lg">
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">

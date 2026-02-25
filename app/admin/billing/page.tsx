@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export default function AdminBillingPage() {
   const [payload, setPayload] = useState('{"name":"Starter","amountCents":14900,"currency":"usd","interval":"month"}');
@@ -29,6 +30,13 @@ export default function AdminBillingPage() {
 
   return (
     <div className="max-w-3xl">
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Admin", url: "https://playcourt.io/admin" },
+          { name: "Billing", url: "https://playcourt.io/admin/billing" },
+        ]}
+      />
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-slate-900">Billing</h1>
         <p className="mt-1 text-sm text-slate-500">V2 scaffold for subscription plan management.</p>

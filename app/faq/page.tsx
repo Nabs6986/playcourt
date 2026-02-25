@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions | PlayCourt",
@@ -151,35 +152,18 @@ const faqSchema = {
   })),
 };
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://playcourt.io",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "FAQ",
-      item: "https://playcourt.io/faq",
-    },
-  ],
-};
-
 export default function FAQPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "FAQ", url: "https://playcourt.io/faq" },
+        ]}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       <div className="max-w-4xl mx-auto px-6 py-24">

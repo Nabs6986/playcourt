@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Calendar, Clock, Tag, User } from "lucide-react";
 import { getPost, getAllPostSlugs, getAllPosts } from "../_data/posts";
+import { ArticleSchema } from "@/components/schema/ArticleSchema";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -60,29 +62,6 @@ export default async function BlogPostPage({ params }: Props) {
     .filter((p) => p.slug !== post.slug)
     .slice(0, 2);
 
-  // JSON-LD Schema for Article
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": post.title,
-    "description": post.metaDescription,
-    "datePublished": post.publishedAt,
-    "dateModified": post.updatedAt || post.publishedAt,
-    "author": {
-      "@type": "Organization",
-      "name": post.author.name,
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "PlayCourt",
-      "url": "https://playcourt.io",
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `https://playcourt.io/blog/${post.slug}`,
-    },
-  };
-
   // JSON-LD Schema for FAQ (if present)
   const faqSchema = post.faqs
     ? {
@@ -101,9 +80,20 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Blog", url: "https://playcourt.io/blog" },
+          { name: post.title, url: `https://playcourt.io/blog/${post.slug}` },
+        ]}
+      />
+      <ArticleSchema
+        title={post.title}
+        description={post.metaDescription}
+        author={post.author.name}
+        datePublished={post.publishedAt}
+        dateModified={post.updatedAt || post.publishedAt}
+        url={`https://playcourt.io/blog/${post.slug}`}
       />
       {faqSchema && (
         <script

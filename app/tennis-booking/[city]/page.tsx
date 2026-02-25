@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MapPin, Sun, Users, Calendar, ArrowRight, Building2 } from "lucide-react";
 import { getCity, getAllCitySlugs, City } from "../_data/cities";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 interface Props {
   params: Promise<{ city: string }>;
@@ -78,6 +79,13 @@ export default async function CityPage({ params }: Props) {
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Tennis Booking", url: `https://playcourt.io/tennis-booking/${city.slug}` },
+          { name: city.name, url: `https://playcourt.io/tennis-booking/${city.slug}` },
+        ]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

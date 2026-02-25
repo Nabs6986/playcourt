@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Calendar, Clock, User } from "lucide-react";
+import { ArticleSchema } from "@/components/schema/ArticleSchema";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export const metadata: Metadata = {
   title: "How Small Tennis Clubs Are Ditching Spreadsheets in 2026 | PlayCourt Blog",
@@ -12,29 +14,6 @@ export const metadata: Metadata = {
       "The pain points of spreadsheet booking, the ROI of switching, and a step-by-step migration guide for tennis club managers.",
     type: "article",
     publishedTime: "2026-02-17",
-  },
-};
-
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  headline: "How Small Tennis Clubs Are Ditching Spreadsheets in 2026",
-  description:
-    "Why hundreds of small tennis clubs are abandoning Excel and Google Sheets for dedicated booking software — and the exact ROI they're seeing.",
-  datePublished: "2026-02-17",
-  dateModified: "2026-02-17",
-  author: {
-    "@type": "Organization",
-    name: "PlayCourt Team",
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "PlayCourt",
-    url: "https://playcourt.io",
-  },
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": "https://playcourt.io/blog/ditching-spreadsheets",
   },
 };
 
@@ -88,9 +67,20 @@ const faqSchema = {
 export default function DitchingSpreadsheetsBlogPost() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Blog", url: "https://playcourt.io/blog" },
+          { name: "Ditching Spreadsheets", url: "https://playcourt.io/blog/ditching-spreadsheets" },
+        ]}
+      />
+      <ArticleSchema
+        title="How Small Tennis Clubs Are Ditching Spreadsheets in 2026"
+        description="Why hundreds of small tennis clubs are abandoning Excel and Google Sheets for dedicated booking software — and the exact ROI they're seeing."
+        author="PlayCourt Team"
+        datePublished="2026-02-17"
+        dateModified="2026-02-17"
+        url="https://playcourt.io/blog/ditching-spreadsheets"
       />
       <script
         type="application/ld+json"

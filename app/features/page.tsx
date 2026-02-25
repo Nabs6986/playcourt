@@ -16,6 +16,7 @@ import {
   ArrowRight,
   Check,
 } from "lucide-react";
+import { BreadcrumbSchema } from "@/components/schema/BreadcrumbSchema";
 
 export const metadata: Metadata = {
   title: "Features | PlayCourt - Tennis Court Booking Software",
@@ -180,6 +181,12 @@ export default function FeaturesPage() {
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://playcourt.io" },
+          { name: "Features", url: "https://playcourt.io/features" },
+        ]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
