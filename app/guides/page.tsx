@@ -33,7 +33,7 @@ export default function GuidesIndexPage() {
         <section className="py-12">
           <div className="mx-auto max-w-4xl px-6 space-y-4">
             {guides.map((guide) => (
-              <Link key={guide.href} href={guide.href} className="block rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-300 hover:shadow-md transition-all group">
+              <Link key={guide.href} href={guide.href as any} className="block rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-300 hover:shadow-md transition-all group">
                 <div className="flex items-start justify-between gap-4"><div><h2 className="text-xl font-bold text-slate-900 group-hover:text-brand-700 mb-2">{guide.title}</h2><p className="text-slate-600 mb-3">{guide.description}</p><span className="text-xs text-slate-400">Updated {guide.updated}</span></div><ArrowRight className="h-5 w-5 text-slate-400 group-hover:text-brand-600 flex-shrink-0 mt-1" /></div>
               </Link>
             ))}
