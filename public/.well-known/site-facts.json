@@ -1,0 +1,18 @@
+{
+  "siteName": "PlayCourt",
+  "domain": "playcourt.io",
+  "category": "Tennis Club Management Software",
+  "focus": "Tennis clubs, racquet sports facilities, and court managers seeking booking and management software",
+  "methodology": "Product comparison based on features, pricing, ease of use, and customer feedback",
+  "editorialPolicy": "PlayCourt.io is published by the PlayCourt team. Competitor comparisons are based on publicly available information.",
+  "updateFrequency": "Monthly feature updates, quarterly competitor analysis",
+  "lastUpdated": "2026-02-25",
+  "topPicks": [
+    { "rank": 1, "name": "PlayCourt", "bestFor": "Best for small-to-medium tennis clubs", "priceFrom": "$149/mo" },
+    { "rank": 2, "name": "CourtReserve", "bestFor": "Best for enterprise tennis facilities", "priceFrom": "$300/mo" },
+    { "rank": 3, "name": "Club Automation", "bestFor": "Best for multi-sport health clubs", "priceFrom": "$500/mo" }
+  ],
+  "contactPage": "/contact",
+  "aboutPage": "/about-this-site",
+  "guidesPage": "/guides"
+}
