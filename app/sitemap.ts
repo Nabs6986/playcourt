@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import { getAllCompetitorSlugs } from './vs/_data/competitors';
 import { getAllCitySlugs } from './tennis-booking/_data/cities';
 import { getAllPostSlugs } from './blog/_data/posts';
+import { getAllToolSlugs } from './reviews/_data/tools';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://playcourt.io';
@@ -43,5 +44,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...corePages, ...comparisonPages, ...locationPages, ...blogPages];
+  // Review pages (/reviews/)
+  const reviewIndexPage: MetadataRoute.Sitemap = [
+    { url: `${baseUrl}/reviews`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.7 },
+  ];
+
+  const reviewPages: MetadataRoute.Sitemap = getAllToolSlugs().map((slug) => ({
+    url: `${baseUrl}/reviews/${slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  return [...corePages, ...comparisonPages, ...locationPages, ...blogPages, ...reviewIndexPage, ...reviewPages];
 }
