@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getAllCompetitorSlugs } from './vs/_data/competitors';
 import { getAllCitySlugs } from './tennis-booking/_data/cities';
+import { getAllPostSlugs } from './blog/_data/posts';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://playcourt.io';
@@ -35,5 +36,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...corePages, ...comparisonPages, ...locationPages];
+  const blogPages: MetadataRoute.Sitemap = getAllPostSlugs().map((slug) => ({
+    url: `${baseUrl}/blog/${slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  return [...corePages, ...comparisonPages, ...locationPages, ...blogPages];
 }
